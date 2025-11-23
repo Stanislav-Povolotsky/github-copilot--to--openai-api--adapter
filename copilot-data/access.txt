@@ -1,0 +1,2 @@
+# Place here access keys which you want to use to access this server, or '*' to give an access to everyone
+*

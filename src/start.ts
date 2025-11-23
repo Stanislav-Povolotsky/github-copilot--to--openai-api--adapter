@@ -13,6 +13,7 @@ import { state } from "./lib/state"
 import { setupCopilotToken, setupGitHubToken } from "./lib/token"
 import { cacheModels, cacheVSCodeVersion } from "./lib/utils"
 import { server } from "./server"
+import { loadAccessFile } from "~/lib/access"
 
 interface RunServerOptions {
   port: number
@@ -49,6 +50,9 @@ export async function runServer(options: RunServerOptions): Promise<void> {
 
   await ensurePaths()
   await cacheVSCodeVersion()
+
+  // Load access keys (access.txt) into memory so endpoints can validate requests
+  await loadAccessFile()
 
   if (options.githubToken) {
     state.githubToken = options.githubToken

@@ -11,3 +11,8 @@ tests/
 *.md
 
 .eslintcache
+
+# this folder can be mapped to `/root/.local/share/copilot-api` inside the container,
+# ensuring persistence across restarts, also it contain access tokens,
+# which should not be used for docker builds
+/copilot-data/

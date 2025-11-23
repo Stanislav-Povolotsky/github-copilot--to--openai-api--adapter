@@ -12,3 +12,8 @@ node_modules/
 
 # build output
 dist/
+
+# this folder can be mapped to `/root/.local/share/copilot-api` inside the container,
+# ensuring persistence across restarts, also it contain access tokens,
+# which should not be stored on github
+/copilot-data/

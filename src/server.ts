@@ -1,6 +1,8 @@
 import { Hono } from "hono"
+import type { Context, Next } from "hono"
 import { cors } from "hono/cors"
 import { logger } from "hono/logger"
+import { requireAccess } from "~/lib/access"
 
 import { completionRoutes } from "./routes/chat-completions/route"
 import { embeddingRoutes } from "./routes/embeddings/route"
@@ -13,6 +15,12 @@ export const server = new Hono()
 
 server.use(logger())
 server.use(cors())
+// Require access token for all routes under this server
+server.use(async (c: Context, next: Next) => {
+	const res = await requireAccess(c)
+	if (res !== undefined) return res
+	await next()
+})
 
 server.get("/", (c) => c.text("Server running"))
 
